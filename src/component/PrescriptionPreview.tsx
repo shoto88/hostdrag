@@ -39,7 +39,7 @@ const PrescriptionPreview: React.FC = () => {
         return { 
           ...medicationData, 
           days: selected.days,
-          unit: selected.unit || '日分', // この行が正しく設定されているか確認
+          unit: selected.unit || '日分',
           dosageTiming: Array.isArray(medicationData.dosageTiming) 
             ? medicationData.dosageTiming 
             : JSON.parse(medicationData.dosageTiming || '[]')
@@ -47,6 +47,7 @@ const PrescriptionPreview: React.FC = () => {
       },
     })),
   });
+  
   const isLoading = medicationQueries.some((query) => query.isLoading);
   const isError = medicationQueries.some((query) => query.isError);
   const medications = medicationQueries

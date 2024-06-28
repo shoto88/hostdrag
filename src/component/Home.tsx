@@ -84,22 +84,23 @@ const Home: React.FC = () => {
   }, [medicationsByGenre]);
 
   const handleMedicationSelect = (medicationId: number) => {
+    const medication = allMedications?.find(med => med.id === medicationId);
+    const unit = (medication?.name === '五苓散料' || medication?.name === '呉茱萸湯') ? '回分' : '日分';
     setSelectedMedications(prev => ({
       ...prev,
       [medicationId]: { 
         selected: !prev[medicationId]?.selected,
         days: prev[medicationId]?.days || 1,
-        unit: prev[medicationId]?.unit || '日分'
+        unit: unit
       }
     }));
   };
   
+
   const handleDaysChange = (medicationId: number, days: number) => {
-    const medication = allMedications?.find(med => med.id === medicationId);
-    const unit = (medication?.name === '五苓散料' || medication?.name === '呉茱萸湯') ? '回分' : '日分';
     setSelectedMedications(prev => ({
       ...prev,
-      [medicationId]: { ...prev[medicationId], days, unit }
+      [medicationId]: { ...prev[medicationId], days }
     }));
   };
   const toggleSetExpansion = (setName: string) => {
@@ -131,7 +132,7 @@ const Home: React.FC = () => {
   const getSelectedMedications = () => {
     return Object.entries(selectedMedications)
       .filter(([_, value]) => value.selected)
-      .map(([id, value]) => ({ id: parseInt(id), days: value.days }));
+      .map(([id, value]) => ({ id: parseInt(id), days: value.days, unit: value.unit }));
   };
 
   const getSelectedMedicationNames = () => {
@@ -243,11 +244,12 @@ const Home: React.FC = () => {
           <Button className='ml-5 mr-5 bg-red-300 p-2'>薬剤詳細一覧</Button>
         </Link>
         <Link
-          to="/prescription-preview"
-          state={{ selectedMedications: getSelectedMedications() }}
-        >
-          <Button className='ml-5 mr-5 bg-purple-300 p-2'>プレビュー</Button>
-        </Link>
+  to="/prescription-preview"
+  state={{ selectedMedications: getSelectedMedications() }}
+>
+  <Button className='ml-5 mr-5 bg-purple-300 p-2'>プレビュー</Button>
+</Link>
+
       </div>
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">全薬剤一覧</h2>
