@@ -143,8 +143,8 @@ const PrescriptionPreview: React.FC = () => {
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-black p-1 text-center align-middle text-xs w-[18%]">名前 形 色</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[20%]">飲み方</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[8%]">用法用量</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[21%]">飲み方</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[7%]">用法用量</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[6%]">日数</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[23%] text-red-500">効能効果</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[25%] text-red-500">注意事項(注意が必要な方)</th>
@@ -166,7 +166,7 @@ const PrescriptionPreview: React.FC = () => {
               <td className="border border-black p-1 text-center align-middle text-xs">
                 {isSpecialTiming(medication) ? renderSpecialTimingTable(medication) : renderNormalTimingTable(medication)}
               </td>
-              <td className="border border-black p-1 text-left align-top text-xs whitespace-pre-line">
+              <td className="border border-black p-1 text-left align-middle text-xs whitespace-pre-line">
             1回 {medication.dosageAmount}{getDosageUnit(medication)}<br />
             {medication.dosageTiming.join('\n')}
           </td>
