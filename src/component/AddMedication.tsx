@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 
 
-const GENRES = ['解熱鎮痛', 'ピル', 'ビタミン', '対症療法', '頭痛', '抗生物質', '漢方薬','その他'];  // 新しいジャンルを追加
+const GENRES = ['解熱鎮痛', 'ピル', 'ビタミン', '対症療法', '頭痛', '抗生物質', '漢方薬','その他','外用薬'];  // 新しいジャンルを追加
 
 interface Medication {
   id: number;

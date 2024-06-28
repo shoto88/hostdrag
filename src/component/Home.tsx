@@ -33,7 +33,7 @@ const GENRE_ORDER = [
   '対症療法',
   'ビタミン',
   '抗生物質',
-
+  '外用薬',
   'その他'
 ];
 const Home: React.FC = () => {

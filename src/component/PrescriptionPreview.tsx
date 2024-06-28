@@ -69,6 +69,10 @@ const PrescriptionPreview: React.FC = () => {
   }
 
   const getDosageForTiming = (medication: Medication, timing: string) => {
+    if (medication.genre === '外用薬') {
+      return timing === '指示通り' ? '適\n量' : '';
+    }
+
     if (['毎食間', '毎食前', '毎食後'].some(t => medication.dosageTiming.includes(t)) && ['朝', '昼', '夕'].includes(timing)) {
       return medication.dosageAmount;
     }
@@ -79,7 +83,7 @@ const PrescriptionPreview: React.FC = () => {
       (timing === '昼' && (t === '昼食前' || t === '昼食後')) ||
       (timing === '夕' && (t === '夕食前' || t === '夕食後')) ||
       (timing === '就寝前' && t === '就寝前') ||
-      (timing === '必要時' && ['発熱・疼痛時', '嘔気時', '頭痛時'].includes(t))
+      (timing === '指示通り' && ['発熱・疼痛時', '嘔気時', '頭痛時','指示通り'].includes(t))
     );
 
     return matchingTiming ? medication.dosageAmount : '';
@@ -93,19 +97,20 @@ const PrescriptionPreview: React.FC = () => {
 
   const renderNormalTimingTable = (medication: Medication) => (
     <div className="grid grid-cols-6 grid-rows-2 gap-0.5 text-xs mt-0 h-auto relative">
-      {['起床後', '朝', '昼', '夕', '就寝前', '必要時'].map((timing, index) => (
+      {['起床後', '朝', '昼', '夕', '就寝前', '指示通り'].map((timing, index) => (
         <div key={index} className="p-1 pt-0 text-center align-middle text-[10px] relative after:content-[''] after:absolute after:top-0 after:bottom-0 after:right-0 after:border-r after:border-black before:content-[''] before:absolute before:top-full before:left-0 before:right-0 before:border-b before:border-black last:after:border-r-0 last:before:border-b-0">
           {timing}
         </div>
       ))}
-      {['起床後', '朝', '昼', '夕', '就寝前', '必要時'].map((timing, index) => (
-        <div key={index} className="p-1 pt-4 text-center align-middle">
-          {getDosageForTiming(medication, timing)}
-        </div>
-      ))}
+{['起床後', '朝', '昼', '夕', '就寝前', '指示通り'].map((timing, index) => (
+  <div key={index} className="p-1 pt-4 text-center align-middle whitespace-pre-line">
+    {getDosageForTiming(medication, timing)}
+  </div>
+))}
     </div>
   );
   const getDosageUnit = (medication: Medication) => {
+    if (medication.genre === '外用薬') return '';
     return medication.genre === '漢方薬' ? '包' : '錠';
   };
   const renderSpecialTimingTable = (medication: Medication) => (
@@ -145,8 +150,8 @@ const PrescriptionPreview: React.FC = () => {
           <tr className="bg-gray-100">
             <th className="border border-black p-1 text-center align-middle text-xs w-[18%]">名前 形 色</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[21%]">飲み方</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[7%]">用法用量</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[6%]">日数</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[8%]">用法用量</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[5%]">日数</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[23%] text-red-500">効能効果</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[25%] text-red-500">注意事項(注意が必要な方)</th>
           </tr>
@@ -168,9 +173,9 @@ const PrescriptionPreview: React.FC = () => {
                 {isSpecialTiming(medication) ? renderSpecialTimingTable(medication) : renderNormalTimingTable(medication)}
               </td>
               <td className="border border-black p-1 text-left align-middle text-xs whitespace-pre-line">
-            1回 {medication.dosageAmount}{getDosageUnit(medication)}<br />
-            {medication.dosageTiming.join('\n')}
-          </td>
+  {medication.genre === '外用薬' ? '1回適量' : `1回 ${medication.dosageAmount}${getDosageUnit(medication)}`}<br />
+  {medication.dosageTiming.join('\n')}
+</td>
           <td className="border border-black p-1 text-center align-middle text-xs">
   {medication.days}{medication.unit}
 </td>

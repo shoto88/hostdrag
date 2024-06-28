@@ -24,7 +24,7 @@ interface Set {
   id: string;
   name: string;
 }
-const GENRES = ['解熱鎮痛', 'ピル', 'ビタミン', '対症療法', '頭痛', '抗生物質', '漢方薬', 'その他'];
+const GENRES = ['解熱鎮痛', 'ピル', 'ビタミン', '対症療法', '頭痛', '抗生物質', '漢方薬', 'その他','外用薬'];
 
 const AddDrag: React.FC = () => {
   const navigate = useNavigate();
