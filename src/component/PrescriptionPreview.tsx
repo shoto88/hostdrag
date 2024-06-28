@@ -142,12 +142,12 @@ const PrescriptionPreview: React.FC = () => {
       <table className="w-full border-collapse mb-5 rounded-sm overflow-hidden">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border border-black p-1 text-center align-middle text-xs w-[15%]">名前 形 色</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[18%]">名前 形 色</th>
             <th className="border border-black p-1 text-center align-middle text-xs w-[20%]">飲み方</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[10%]">用法用量</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[4%]">日数</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[20%] text-red-500">効能効果</th>
-            <th className="border border-black p-1 text-center align-middle text-xs w-[26%] text-red-500">注意事項(注意が必要な方)</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[8%]">用法用量</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[6%]">日数</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[23%] text-red-500">効能効果</th>
+            <th className="border border-black p-1 text-center align-middle text-xs w-[25%] text-red-500">注意事項(注意が必要な方)</th>
           </tr>
         </thead>
         <tbody>
