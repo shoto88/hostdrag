@@ -69,7 +69,7 @@ const PrescriptionPreview: React.FC = () => {
   }
 
   const getDosageForTiming = (medication: Medication, timing: string) => {
-    if (medication.dosageTiming.includes('毎食間') && ['朝', '昼', '夕'].includes(timing)) {
+    if (['毎食間', '毎食前', '毎食後'].some(t => medication.dosageTiming.includes(t)) && ['朝', '昼', '夕'].includes(timing)) {
       return medication.dosageAmount;
     }
 
