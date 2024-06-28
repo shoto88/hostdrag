@@ -232,22 +232,22 @@ const Home: React.FC = () => {
       </div>
       <div className="mt-8 flex">
         <Link to="/add-set">
-          <Button className='ml-5 mr-5 bg-blue-300 p-2'>セット追加</Button>
+          <Button className='ml-5 mr-5 bg-blue-300 text-black p-2'>セット追加</Button>
         </Link>
         <Link to="/add-drag">
-          <Button className='ml-5 mr-5 bg-green-300 p-2'>薬剤追加</Button>
+          <Button className='ml-5 mr-5 bg-green-300 text-black p-2'>薬剤追加</Button>
         </Link>
         <Link to="/edit-medication">
-          <Button className='ml-5 mr-5 bg-yellow-300 p-2'>薬剤編集</Button>
+          <Button className='ml-5 mr-5 bg-yellow-300 text-black p-2'>薬剤編集</Button>
         </Link>
         <Link to="/medicationslist">
-          <Button className='ml-5 mr-5 bg-red-300 p-2'>薬剤詳細一覧</Button>
+          <Button className='ml-5 mr-5 bg-red-300 text-black p-2'>薬剤詳細一覧</Button>
         </Link>
         <Link
   to="/prescription-preview"
   state={{ selectedMedications: getSelectedMedications() }}
 >
-  <Button className='ml-5 mr-5 bg-purple-300 p-2'>プレビュー</Button>
+  <Button className='ml-5 mr-5 bg-purple-300 text-black p-2'>プレビュー</Button>
 </Link>
 
       </div>
