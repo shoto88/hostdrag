@@ -12,11 +12,13 @@ interface Medication {
   dosageTiming: string[];
   genre: string;
   days: number;
+  unit: string;
 }
 
 interface SelectedMedication {
   id: number;
   days: number;
+  unit?: string;
 }
 
 
@@ -37,6 +39,7 @@ const PrescriptionPreview: React.FC = () => {
         return { 
           ...medicationData, 
           days: selected.days,
+          unit: selected.unit || '日分', // この行が正しく設定されているか確認
           dosageTiming: Array.isArray(medicationData.dosageTiming) 
             ? medicationData.dosageTiming 
             : JSON.parse(medicationData.dosageTiming || '[]')
@@ -44,7 +47,6 @@ const PrescriptionPreview: React.FC = () => {
       },
     })),
   });
-
   const isLoading = medicationQueries.some((query) => query.isLoading);
   const isError = medicationQueries.some((query) => query.isError);
   const medications = medicationQueries
@@ -143,7 +145,9 @@ const PrescriptionPreview: React.FC = () => {
             1回 {medication.dosageAmount}{getDosageUnit(medication)}<br />
             {medication.dosageTiming.join('\n')}
           </td>
-              <td className="border border-black p-1 text-center align-middle text-xs">{medication.days}日</td>
+          <td className="border border-black p-1 text-center align-middle text-xs">
+  {medication.days}{medication.unit}
+</td>
               <td className="border border-black p-1 text-left align-top text-[10px]">{medication.effects}</td>
               <td className="border border-black p-1 text-left align-top text-[10px]">{medication.precautions}</td>
             </tr>

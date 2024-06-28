@@ -18,6 +18,11 @@ interface Medication {
   name: string;
   genre: string;
 }
+interface MedicationSelection {
+  selected: boolean;
+  days: number;
+  unit?: string;
+}
 
 
 const GENRE_ORDER = [
@@ -32,7 +37,7 @@ const GENRE_ORDER = [
   'その他'
 ];
 const Home: React.FC = () => {
-  const [selectedMedications, setSelectedMedications] = useState<{ [key: number]: { selected: boolean, days: number } }>({});
+  const [selectedMedications, setSelectedMedications] = useState<{ [key: number]: MedicationSelection }>({});
   const [expandedSetNames, setExpandedSetNames] = useState(new Set<string>());
 
   const { data: sets, isLoading: setsLoading, error: setsError } = useQuery<Set[]>({
@@ -83,17 +88,20 @@ const Home: React.FC = () => {
       ...prev,
       [medicationId]: { 
         selected: !prev[medicationId]?.selected,
-        days: prev[medicationId]?.days || 1  // デフォルト値を1に設定
+        days: prev[medicationId]?.days || 1,
+        unit: prev[medicationId]?.unit || '日分'
       }
     }));
   };
+  
   const handleDaysChange = (medicationId: number, days: number) => {
+    const medication = allMedications?.find(med => med.id === medicationId);
+    const unit = (medication?.name === '五苓散料' || medication?.name === '呉茱萸湯') ? '回分' : '日分';
     setSelectedMedications(prev => ({
       ...prev,
-      [medicationId]: { ...prev[medicationId], days }
+      [medicationId]: { ...prev[medicationId], days, unit }
     }));
   };
-
   const toggleSetExpansion = (setName: string) => {
     setExpandedSetNames(prevNames => {
       const newNames = new Set(prevNames);
@@ -200,17 +208,19 @@ const Home: React.FC = () => {
                       />
                       <span className="flex-grow">{med.name}</span>
                       {selectedMedications[med.id]?.selected && (
-                        <div className="flex items-center space-x-2">
-                          <Input
-                            type="number"
-                            value={selectedMedications[med.id]?.days || 1}
-                            onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
-                            min="1"
-                            className="w-16 text-right"
-                          />
-                          <span className="whitespace-nowrap">日分</span>
-                        </div>
-                      )}
+  <div className="flex items-center space-x-2">
+    <Input
+      type="number"
+      value={selectedMedications[med.id]?.days || 1}
+      onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
+      min="1"
+      className="w-16 text-right"
+    />
+    <span className="whitespace-nowrap">
+      {selectedMedications[med.id]?.unit || '日分'}
+    </span>
+  </div>
+)}
                     </div>
                   ))}
                 </div>
