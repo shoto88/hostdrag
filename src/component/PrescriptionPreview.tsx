@@ -125,6 +125,7 @@ const PrescriptionPreview: React.FC = () => {
 
 
   return (
+    
     <div className="w-[210mm] h-[297mm] p-2 box-border page-break-after-always">
       <div className="mb-4 print:hidden">
         <label htmlFor="patientName" className="mr-2">患者名：</label>
