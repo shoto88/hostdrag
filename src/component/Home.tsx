@@ -262,27 +262,29 @@ const Home: React.FC = () => {
               </h3>
               <div className="space-y-2">
               {medicationsByGenre[genre].map(med => (
-                  <div key={med.id} className="flex items-center space-x-2 bg-white bg-opacity-50 p-2 rounded">
-                    <CustomCheckbox
-                      checked={selectedMedications[med.id]?.selected || false}
-                      onCheckedChange={() => handleMedicationSelect(med.id)}
-                      className="h-5 w-5"
-                    />
-                    <span className="flex-grow">{med.name}</span>
-                    {selectedMedications[med.id]?.selected && (
-                      <div className="flex items-center space-x-2">
-                        <Input
-                          type="number"
-                          value={selectedMedications[med.id]?.days || 1}
-                          onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
-                          min="1"
-                          className="w-16"
-                        />
-                        <span className="whitespace-nowrap">日分</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
+  <div key={med.id} className="flex items-center space-x-2 bg-white bg-opacity-50 p-2 rounded">
+    <CustomCheckbox
+      checked={selectedMedications[med.id]?.selected || false}
+      onCheckedChange={() => handleMedicationSelect(med.id)}
+      className="h-5 w-5"
+    />
+    <span className="flex-grow">{med.name}</span>
+    {selectedMedications[med.id]?.selected && (
+      <div className="flex items-center space-x-2">
+        <Input
+          type="number"
+          value={selectedMedications[med.id]?.days || 1}
+          onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
+          min="1"
+          className="w-16"
+        />
+        <span className="whitespace-nowrap">
+          {selectedMedications[med.id]?.unit || '日分'}
+        </span>
+      </div>
+    )}
+  </div>
+))}
               </div>
             </div>
           ))}
