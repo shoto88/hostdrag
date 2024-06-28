@@ -161,7 +161,7 @@ const Home: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex flex-col mb-6">
-        <h1 className="text-3xl font-bold mb-4">薬剤管理システム</h1>
+        <h1 className="text-3xl font-bold mb-4">院内処方用</h1>
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
           <h2 className="text-xl font-semibold mb-2">選択した薬剤:</h2>
           <div className="flex flex-wrap gap-2">

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { useLocation } from 'react-router-dom';
 import { useQueries } from '@tanstack/react-query';
 import axios from 'axios';
@@ -13,6 +14,7 @@ interface Medication {
   genre: string;
   days: number;
   unit: string;
+  image_url: string; 
 }
 
 interface SelectedMedication {
@@ -25,7 +27,7 @@ interface SelectedMedication {
 
 const PrescriptionPreview: React.FC = () => {
   const location = useLocation();
-  const patientName = "山田 太郎"; // 仮の患者名
+  const [patientName, setPatientName] = useState("山田 太郎");
   const datePrescribed = new Date();
 
   const selectedMedications: SelectedMedication[] = location.state?.selectedMedications || [];
@@ -82,7 +84,9 @@ const PrescriptionPreview: React.FC = () => {
 
     return matchingTiming ? medication.dosageAmount : '';
   };
-
+  const handlePatientNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPatientName(event.target.value);
+  };
   const isSpecialTiming = (medication: Medication) => {
     return medication.dosageTiming.includes('症状出現時') && medication.dosageTiming.includes('12時間後');
   };
@@ -119,9 +123,22 @@ const PrescriptionPreview: React.FC = () => {
     </div>
   );
 
+
   return (
     <div className="w-[210mm] h-[297mm] p-2 box-border page-break-after-always">
+      <div className="mb-4 print:hidden">
+        <label htmlFor="patientName" className="mr-2">患者名：</label>
+        <input
+          type="text"
+          id="patientName"
+          value={patientName}
+          onChange={handlePatientNameChange}
+          className="border border-gray-300 rounded px-2 py-1"
+        />
+        <h3 className='text-gray-500 text-sm'>(上記入力欄は印刷時には表示されません)</h3>
+      </div>
       <h1 className="text-sm mb-4">{patientName}様に本日処方する薬の説明書です</h1>
+        
       <table className="w-full border-collapse mb-5 rounded-sm overflow-hidden">
         <thead>
           <tr className="bg-gray-100">
@@ -137,7 +154,14 @@ const PrescriptionPreview: React.FC = () => {
           {medications.map((medication) => (
             <tr key={medication.id}>
               <td className="border border-black p-1 text-center align-middle text-xs">
-                <strong className="text-[10px]">{medication.name}</strong>
+                <strong className="text-[12px]">{medication.name}</strong>
+                {medication.image_url && (
+                  <img 
+                    src={medication.image_url} 
+                    alt={medication.name} 
+                    className="mt-0 w-24 h-16 p-0 object-contain mx-auto"
+                  />
+                )}
               </td>
               <td className="border border-black p-1 text-center align-middle text-xs">
                 {isSpecialTiming(medication) ? renderSpecialTimingTable(medication) : renderNormalTimingTable(medication)}
