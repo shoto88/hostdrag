@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+// import {useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
 import { Label } from "./ui/label"
-import { PlusIcon} from 'lucide-react';
+// import { PlusIcon} from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card"
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "./ui/select"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "./ui/dialog"
+// import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "./ui/dialog"
 import { Checkbox } from "./ui/checkbox"
 
 
@@ -28,7 +28,7 @@ const GENRES = ['解熱鎮痛', 'ピル', 'ビタミン', '対症療法', '頭�
 
 const AddDrag: React.FC = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
   const [medication, setMedication] = useState<{
     name: string;
     effects: string;
@@ -86,14 +86,14 @@ const AddDrag: React.FC = () => {
     }));
   };
 
-  const handleSetChange = (setId: string) => {
-    setMedication(prev => {
-      const newSets = prev.sets.includes(setId)
-        ? prev.sets.filter(id => id !== setId)
-        : [...prev.sets, setId];
-      return { ...prev, sets: newSets };
-    });
-  };
+  // const handleSetChange = (setId: string) => {
+  //   setMedication(prev => {
+  //     const newSets = prev.sets.includes(setId)
+  //       ? prev.sets.filter(id => id !== setId)
+  //       : [...prev.sets, setId];
+  //     return { ...prev, sets: newSets };
+  //   });
+  // };
 
   // const handleAddSet = async () => {
   //   if (!newSetName.trim()) {
