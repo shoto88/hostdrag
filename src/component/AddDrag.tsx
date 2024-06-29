@@ -87,12 +87,12 @@ const AddDrag: React.FC = () => {
   };
 
   const handleSetChange = (setId: string) => {
-    setMedication(prev => {
-      const newSets = prev.sets.includes(setId)
+    setMedication(prev => ({
+      ...prev,
+      sets: prev.sets.includes(setId)
         ? prev.sets.filter(id => id !== setId)
-        : [...prev.sets, setId];
-      return { ...prev, sets: newSets };
-    });
+        : [...prev.sets, setId]
+    }));
   };
 
   const handleAddSet = async () => {
@@ -214,16 +214,16 @@ const AddDrag: React.FC = () => {
             <div>Loading sets...</div>
           ) : (
             <div className="grid gap-2">
-              {sets?.map((set) => (
-                <div key={set.id} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={`set-${set.id}`}
-                    checked={medication.sets.includes(set.id)}
-                    onCheckedChange={() => handleSetChange(set.id)}
-                  />
-                  <Label htmlFor={`set-${set.id}`}>{set.name}</Label>
-                </div>
-              ))}
+{sets?.map((set) => (
+  <div key={set.id} className="flex items-center space-x-2">
+    <Checkbox
+      id={`set-${set.id}`}
+      checked={medication.sets.includes(set.id)}
+      onCheckedChange={() => handleSetChange(set.id)}
+    />
+    <Label htmlFor={`set-${set.id}`}>{set.name}</Label>
+  </div>
+))}
             </div>
           )}
           <Button
