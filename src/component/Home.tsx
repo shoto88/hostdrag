@@ -20,7 +20,7 @@ interface Medication {
 }
 interface MedicationSelection {
   selected: boolean;
-  days: number;
+  days: number | string | null;
   unit?: string;
 }
 
