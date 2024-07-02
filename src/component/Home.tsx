@@ -216,7 +216,7 @@ const Home: React.FC = () => {
     <Input
       type="number"
       value={selectedMedications[med.id]?.days || 1}
-      onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
+onChange={(e) => handleDaysChange(med.id, e.target.value)}
       min="1"
       className="w-16 text-right"
     />
