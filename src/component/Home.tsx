@@ -97,11 +97,14 @@ const Home: React.FC = () => {
   };
   
 
-  const handleDaysChange = (medicationId: number, days: number) => {
-    setSelectedMedications(prev => ({
-      ...prev,
-      [medicationId]: { ...prev[medicationId], days }
-    }));
+  const handleDaysChange = (medicationId: number, days: string) => {
+    const parsedDays = parseInt(days, 10);
+    if (!isNaN(parsedDays) && parsedDays > 0) {
+      setSelectedMedications(prev => ({
+        ...prev,
+        [medicationId]: { ...prev[medicationId], days: parsedDays }
+      }));
+    }
   };
   const toggleSetExpansion = (setName: string) => {
     setExpandedSetNames(prevNames => {
@@ -251,7 +254,7 @@ const Home: React.FC = () => {
 </Link>
 
       </div>
-      <div className="mt-8">
+     <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">全薬剤一覧</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {sortedGenres.map((genre, index) => (
@@ -261,36 +264,35 @@ const Home: React.FC = () => {
                 {genre}
               </h3>
               <div className="space-y-2">
-              {medicationsByGenre[genre].map(med => (
-  <div key={med.id} className="flex items-center space-x-2 bg-white bg-opacity-50 p-2 rounded">
-    <CustomCheckbox
-      checked={selectedMedications[med.id]?.selected || false}
-      onCheckedChange={() => handleMedicationSelect(med.id)}
-      className="h-5 w-5"
-    />
-    <span className="flex-grow">{med.name}</span>
-    {selectedMedications[med.id]?.selected && (
-      <div className="flex items-center space-x-2">
-        <Input
-          type="number"
-          value={selectedMedications[med.id]?.days || 1}
-          onChange={(e) => handleDaysChange(med.id, parseInt(e.target.value, 10))}
-          min="1"
-          className="w-16"
-        />
-        <span className="whitespace-nowrap">
-          {selectedMedications[med.id]?.unit || '日分'}
-        </span>
-      </div>
-    )}
-  </div>
-))}
+                {medicationsByGenre[genre].map(med => (
+                  <div key={med.id} className="flex items-center space-x-2 bg-white bg-opacity-50 p-2 rounded">
+                    <CustomCheckbox
+                      checked={selectedMedications[med.id]?.selected || false}
+                      onCheckedChange={() => handleMedicationSelect(med.id)}
+                      className="h-5 w-5"
+                    />
+                    <span className="flex-grow">{med.name}</span>
+                    {selectedMedications[med.id]?.selected && (
+                      <div className="flex items-center space-x-2">
+                        <Input
+                          type="number"
+                          value={selectedMedications[med.id]?.days || 1}
+                          onChange={(e) => handleDaysChange(med.id, e.target.value)}
+                          min="1"
+                          className="w-16"
+                        />
+                        <span className="whitespace-nowrap">
+                          {selectedMedications[med.id]?.unit || '日分'}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           ))}
         </div>
       </div>
-
 
     </div>
   );
